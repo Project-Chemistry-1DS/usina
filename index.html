@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizador 3D</title>
+    <!-- Importa a biblioteca model-viewer -->
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <style>
+        /* Estilos para fazer o modelo ocupar toda a tela */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            background-color: #006400; /* Verde Escuro */
+            display: flex;
+            flex-direction: column;
+        }
+        model-viewer {
+            width: 100vw;
+            height: calc(100vh - 30px); /* Ajustado para acomodar o rodapé */
+            display: block;
+        }
+        footer {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            text-align: center;
+            padding: 5px 0;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+        }
+        .botao-voltar {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            background-color: #90EE90; /* Verde claro */
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .botao-voltar:hover {
+            background-color: #7CFC00; /* Verde mais claro ao passar o mouse */
+            transform: scale(1.1);
+        }
+        .botao-voltar::before {
+            content: '←';
+            color: #006400;
+            font-size: 24px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <a href="https://project-chemistry-1ds.github.io/intro/" class="botao-voltar" title="Voltar"></a>
+    <!-- Modelo 3D com controles de câmera e rotação automática -->
+    <model-viewer
+        src="./usina.glb" 
+        alt="Modelo 3D de exemplo"
+        auto-rotate
+        camera-controls
+        camera-orbit="0deg 90deg 10m"
+        min-camera-orbit="auto 90deg 15.9m"
+        max-camera-orbit="auto 90deg 15.9m"
+        disable-pan
+        field-of-view="120deg"
+        style="background-color: #006400;">
+    </model-viewer>
+    <footer>
+        Modelo 3D e página feita por Enrico Fedel
+    </footer>
+</body>
+</html>
