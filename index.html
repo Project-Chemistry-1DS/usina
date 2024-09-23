@@ -64,24 +64,76 @@
                 font-size: 16px;
             }
         }
+        #mensagem-rotacao {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-family: Arial, sans-serif;
+            z-index: 2000;
+            display: none;
+        }
     </style>
 </head>
 <body>
+    <div id="mensagem-rotacao">Por favor, gire seu dispositivo para a horizontal para uma melhor visualização.</div>
     <a href="https://netheriosa.github.io/intro-usina/" class="botao-voltar" title="Voltar"></a>
     <model-viewer
+        id="modelo3d"
         src="./usina.glb" 
         alt="Modelo 3D de exemplo"
         auto-rotate
         camera-controls
-        camera-orbit="12deg 90deg 16m"
-        min-camera-orbit="auto 90deg 15.8m"
-        max-camera-orbit="auto 90deg 15.8m"
         disable-pan
-        field-of-view="360deg"
         style="background-color: #3b7586;">
     </model-viewer>
     <footer>
         Modelo 3D e página feita por Enrico Fedel
     </footer>
+
+    <script>
+        const modelViewer = document.getElementById('modelo3d');
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        const mensagemRotacao = document.getElementById('mensagem-rotacao');
+
+        function verificarOrientacao() {
+            if (isMobile && window.innerHeight > window.innerWidth) {
+                mensagemRotacao.style.display = 'block';
+            } else {
+                mensagemRotacao.style.display = 'none';
+            }
+        }
+
+        if (isMobile) {
+            window.addEventListener('orientationchange', verificarOrientacao);
+            window.addEventListener('resize', verificarOrientacao);
+            verificarOrientacao();
+
+            modelViewer.setAttribute('camera-orbit', '0deg 90deg 19m');
+            modelViewer.setAttribute('min-camera-orbit', 'auto 90deg 4m');
+            modelViewer.setAttribute('max-camera-orbit', 'auto 90deg 19m');
+            modelViewer.setAttribute('field-of-view', '180deg');
+        } else {
+            modelViewer.setAttribute('camera-orbit', '0deg 90deg 14m');
+            modelViewer.setAttribute('min-camera-orbit', 'auto 90deg 4m');
+            modelViewer.setAttribute('max-camera-orbit', 'auto 90deg 14m');
+            modelViewer.setAttribute('field-of-view', '180deg');
+        }
+
+        modelViewer.setAttribute('disable-pan', 'true');
+        modelViewer.setAttribute('interaction-prompt', 'none');
+
+        // Permite rotação horizontal infinita, mantendo a vertical fixa
+        modelViewer.addEventListener('camera-change', (event) => {
+            const orbit = event.detail.source.getCameraOrbit();
+            if (orbit.phi !== Math.PI / 2) {
+                event.detail.source.setCameraOrbit(orbit.theta, Math.PI / 2, orbit.radius);
+            }
+        });
+    </script>
 </body>
 </html>
