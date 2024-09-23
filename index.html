@@ -17,7 +17,7 @@
             flex-direction: column;
         }
         model-viewer {
-            width: 100vw;
+            width: 100%;
             height: calc(100vh - 30px); /* Ajustado para acomodar o rodapé */
             display: block;
         }
@@ -31,10 +31,10 @@
         }
         .botao-voltar {
             position: absolute;
-            top: 20px;
-            left: 20px;
-            width: 50px;
-            height: 50px;
+            top: 10px;
+            left: 10px;
+            width: 40px;
+            height: 40px;
             background-color: #90EE90; /* Verde claro */
             border-radius: 50%;
             display: flex;
@@ -43,6 +43,7 @@
             text-decoration: none;
             box-shadow: 0 4px 8px rgba(0,0,0,0.3);
             transition: background-color 0.3s, transform 0.3s;
+            z-index: 1000;
         }
         .botao-voltar:hover {
             background-color: #7CFC00; /* Verde mais claro ao passar o mouse */
@@ -51,24 +52,33 @@
         .botao-voltar::before {
             content: '←';
             color: #006400;
-            font-size: 24px;
+            font-size: 20px;
             font-weight: bold;
+        }
+        @media (max-width: 768px) {
+            .botao-voltar {
+                width: 30px;
+                height: 30px;
+            }
+            .botao-voltar::before {
+                font-size: 16px;
+            }
         }
     </style>
 </head>
 <body>
-    <a href="https://project-chemistry-1ds.github.io/intro/" class="botao-voltar" title="Voltar"></a>
+    <a href="https://netheriosa.github.io/intro-usina/" class="botao-voltar" title="Voltar"></a>
     <model-viewer
         src="./usina.glb" 
         alt="Modelo 3D de exemplo"
         auto-rotate
         camera-controls
-        camera-orbit="0deg 90deg 19m"
-        min-camera-orbit="auto 90deg 10m"
-        max-camera-orbit="auto 90deg 19m"
+        camera-orbit="12deg 90deg 16m"
+        min-camera-orbit="auto 90deg 15.8m"
+        max-camera-orbit="auto 90deg 15.8m"
         disable-pan
-        field-of-view="189deg"
-        style="background-color: #006400;">
+        field-of-view="360deg"
+        style="background-color: #3b7586;">
     </model-viewer>
     <footer>
         Modelo 3D e página feita por Enrico Fedel
